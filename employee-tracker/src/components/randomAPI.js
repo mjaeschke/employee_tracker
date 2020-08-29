@@ -7,7 +7,7 @@ import EmployeeDetail from "./EmployeeDetail";
 import API from "../utils/API";
 class RandomAPI extends Component {
   state = {
-    result: {},
+    result: [],
     search: "",
   };
   componentDidMount() {
@@ -16,9 +16,11 @@ class RandomAPI extends Component {
       this.setState({
         result: response.data.results.map((emp, idx) => ({
           picture: emp.picture.thumbnail,
-          gender: emp.name.gender,
-          Name: emp.name.name,
+          gender: emp.gender,
+          first: emp.name.first,
+          last: emp.name.last,
           email: emp.email,
+          key: idx,
         })),
       });
     });
@@ -52,12 +54,18 @@ class RandomAPI extends Component {
         </Row>
         <Row>
           <Col size="md-12">
-            <EmployeeDetail
-              picture={this.state.result.picture}
-              gender={this.state.result.gender}
-              name={this.state.result.name}
-              email={this.state.result.email}
-            ></EmployeeDetail>
+            {this.state.result.map(
+              ({ picture, gender, first, last, email, key }) => (
+                <EmployeeDetail
+                  picture={picture}
+                  gender={gender}
+                  first={first}
+                  last={last}
+                  email={email}
+                  key={key}
+                ></EmployeeDetail>
+              )
+            )}
           </Col>
         </Row>
       </Container>

@@ -11,19 +11,22 @@ function EmployeeDetail(props) {
           <img
             alt={props.picture}
             className="img-fluid"
-            src={props.src}
+            src={props.picture}
             style={{ margin: "0 auto" }}
           />
         </Col>
-        <Col size="m-3">
-          <h3>gender:{props.gender}</h3>
+        <Col size="md-3">
+          <h5>gender: {props.gender}</h5>
         </Col>
-        <Col size="m-3">
-          <h3>name:{props.name}</h3>
+        <Col size="md-3">
+          <h5>
+            name: {props.first}
+            {props.last}
+          </h5>
         </Col>
 
-        <Col size="m-3">
-          <h3>email:{props.email}</h3>
+        <Col size="md-3">
+          <h5>email: {props.email}</h5>
         </Col>
       </Row>
     </Container>
