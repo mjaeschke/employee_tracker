@@ -1,8 +1,8 @@
 import React from "react";
-import randomAPI from "./components/randomAPI";
+import RandomAPI from "./components/RandomAPI";
 
 function App() {
-  return <randomAPI />;
+  return <RandomAPI />;
 }
 
 export default App;
