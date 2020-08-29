@@ -3,6 +3,7 @@ import Container from "./Container";
 import Row from "./Row";
 import Col from "./Col";
 import SearchForm from "./SearchForm";
+import EmployeeDetail from "./EmployeeDetail";
 import API from "../utils/API";
 class RandomAPI extends Component {
   state = {
@@ -10,13 +11,19 @@ class RandomAPI extends Component {
     search: "",
   };
   componentDidMount() {
-    this.getUsers(1);
+    API.getUsers().then((response) => {
+      console.log(response);
+      this.setState({
+        result: response.data.results.map((emp, idx) => ({
+          picture: emp.picture.thumbnail,
+          gender: emp.name.gender,
+          Name: emp.name.name,
+          email: emp.email,
+        })),
+      });
+    });
   }
-  getUsers = (size) => {
-    API.getUsers(size)
-      .then((res) => this.setState({ result: res.data }))
-      .catch((err) => console.log(err));
-  };
+
   handleInputChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
@@ -44,17 +51,13 @@ class RandomAPI extends Component {
           </Col>
         </Row>
         <Row>
-          <Col size="md-3">
-            <h5>picture</h5>
-          </Col>
-          <Col size="md-3">
-            <h5>name</h5>
-          </Col>
-          <Col size="md-3">
-            <h5>email</h5>
-          </Col>
-          <Col size="md-3">
-            <h5>DoB</h5>
+          <Col size="md-12">
+            <EmployeeDetail
+              picture={this.state.result.picture}
+              gender={this.state.result.gender}
+              name={this.state.result.name}
+              email={this.state.result.email}
+            ></EmployeeDetail>
           </Col>
         </Row>
       </Container>
