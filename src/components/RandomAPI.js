@@ -25,7 +25,11 @@ class RandomAPI extends Component {
       });
     });
   }
-
+  searchEmployees = (query) => {
+    API.search(query)
+      .then((res) => this.setState({ result: res.data }))
+      .catch((err) => console.log(err));
+  };
   handleInputChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
@@ -35,7 +39,7 @@ class RandomAPI extends Component {
   };
   handleFormSubmit = (event) => {
     event.preventDefault();
-    this.searchMovies(this.state.search);
+    this.searchEmployees(this.state.search);
   };
   render() {
     return (
@@ -44,12 +48,12 @@ class RandomAPI extends Component {
           <Col size="md-6">
             <h1>Employee Directory</h1>
           </Col>
-          <Col size="md-6">
-            <SearchForm>
+          <Col size="md-6" heading="Search">
+            <SearchForm
               value={this.state.search}
               handleInputChange={this.handleInputChange}
               handleFormSubmit={this.handleFormSubmit}
-            </SearchForm>
+            ></SearchForm>
           </Col>
         </Row>
         <Row>
