@@ -35,11 +35,14 @@ class RandomAPI extends Component {
     const name = event.target.name;
     this.setState({
       [name]: value,
+      result: this.state.result.map((e) =>
+        `${e.first}${e.last}`.includes(value)
+      ),
     });
   };
   handleFormSubmit = (event) => {
     event.preventDefault();
-    this.searchEmployees(this.state.search);
+    // this.searchEmployees(this.state.search);
   };
   render() {
     return (
