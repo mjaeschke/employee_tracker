@@ -8,6 +8,7 @@ import API from "../utils/API";
 class RandomAPI extends Component {
   state = {
     result: [],
+    visible: [],
     search: "",
   };
   componentDidMount() {
@@ -35,7 +36,7 @@ class RandomAPI extends Component {
     const name = event.target.name;
     this.setState({
       [name]: value,
-      result: this.state.result.map((e) =>
+      result: this.state.result.filter((e) =>
         `${e.first}${e.last}`.includes(value)
       ),
     });
