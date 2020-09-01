@@ -14,15 +14,17 @@ class RandomAPI extends Component {
   componentDidMount() {
     API.getUsers().then((response) => {
       console.log(response);
+      const employees = response.data.results.map((emp, idx) => ({
+        picture: emp.picture.thumbnail,
+        gender: emp.gender,
+        first: emp.name.first,
+        last: emp.name.last,
+        email: emp.email,
+        key: idx,
+      }));
       this.setState({
-        result: response.data.results.map((emp, idx) => ({
-          picture: emp.picture.thumbnail,
-          gender: emp.gender,
-          first: emp.name.first,
-          last: emp.name.last,
-          email: emp.email,
-          key: idx,
-        })),
+        result: employees,
+        visible: employees,
       });
     });
   }
@@ -36,9 +38,12 @@ class RandomAPI extends Component {
     const name = event.target.name;
     this.setState({
       [name]: value,
-      result: this.state.result.filter((e) =>
-        `${e.first}${e.last}`.includes(value)
-      ),
+      visible: value.length
+        ? this.state.result.filter(
+            (e) =>
+              `${e.first} ${e.last}`.includes(value) || e.gender.includes(value)
+          )
+        : this.state.result,
     });
   };
   handleFormSubmit = (event) => {
@@ -62,7 +67,7 @@ class RandomAPI extends Component {
         </Row>
         <Row>
           <Col size="md-12">
-            {this.state.result.map(
+            {this.state.visible.map(
               ({ picture, gender, first, last, email, key }) => (
                 <EmployeeDetail
                   picture={picture}
