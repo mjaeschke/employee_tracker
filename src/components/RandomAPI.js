@@ -41,7 +41,9 @@ class RandomAPI extends Component {
       visible: value.length
         ? this.state.result.filter(
             (e) =>
-              `${e.first} ${e.last}`.includes(value) || e.gender.includes(value)
+              `${e.first} ${e.last}`.includes(value) ||
+              e.gender.includes(value) ||
+              e.email.includes(value)
           )
         : this.state.result,
     });
